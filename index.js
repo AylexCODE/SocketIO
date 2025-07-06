@@ -1,14 +1,19 @@
-var express = require('express');
-
+const express = require('express');
 const server = require('http').createServer(express);
 
 const socketio = require('socket.io')(server, {
     cors: { origin: '*' }
 });
 
+const connections = [];
+
 socketio.on('connection', socket => {
     //socket.emit('message', 'Hello World!');
     console.log("A user connected successfully!");
+
+    socket.on('connectToRoom', socket => {
+        
+    });
 
     socket.on('update_admin', socket => {
         socketio.emit('update_admin', 'OK');
