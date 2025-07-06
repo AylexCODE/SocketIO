@@ -89,3 +89,6 @@ socket.on('message', (message) => {
   console.log(message);
 });
 ```
+
+That's all.
+Don't forget to give the project a star! Thank you for visiting.
