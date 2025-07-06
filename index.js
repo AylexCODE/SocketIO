@@ -1,30 +1,30 @@
 const express = require('express');
 const server = require('http').createServer(express);
 
-const socketio = require('socket.io')(server, {
+const socketIo = require('socket.io')(server, {
     cors: { origin: '*' }
 });
 
 const connections = [];
 
-socketio.on('connection', socket => {
-    //socket.emit('message', 'Hello World!');
+socketIo.on('connection', socket => {
     console.log("A user connected successfully!");
 
-    socket.on('connectToRoom', socket => {
-        
+    socket.on('createConnection', (id) => {
+        connections[id] = socket.id;
+        socket.join(connections[id]);
+
+        console.log("Joined connection", id);
     });
 
-    socket.on('update_admin', socket => {
-        socketio.emit('update_admin', 'OK');
+    socket.on('connectToConnection', (id) => {
+        socket.join(connections[id]);
     });
 
-    socket.on('update_user', socket => {
-        socketio.emit('update_user', 'OK');
-    });
+    socket.on('sendMessage', (data) => {
+        socketIo.in(connections[data.id]).emit('receivedMessage', data.message);
 
-    socket.on('message', socket => {
-        socketio.emit('message', socket);
+        console.log("Sending Message to", data.id, "[ Content:", data.message, "]");
     });
 });
 
