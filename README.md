@@ -1,3 +1,8 @@
+# About This Repository
+A simple socket.io project with `Rooms` feature
+
+A room is an arbitrary channel that sockets can join and leave. It can be used to broadcast events to a subset of clients. [See here](https://socket.io/docs/v3/rooms/)
+
 # Getting Started
 To get a local copy up and running follow these simple example steps.
 
@@ -23,7 +28,7 @@ To get a local copy up and running follow these simple example steps.
 
 
 ## Installation
-1. Clone the repo
+1. Clone the repository
    ```sh
    git clone https://github.com/AylexCODE/SocketIO.git
    ```
@@ -37,7 +42,7 @@ To get a local copy up and running follow these simple example steps.
    ```
    The output should be `Socket is listening... at port [PORT]`
 
-# Adding Socket.io to our project
+# Adding Socket.io to HTML/Javascript Projects
 ## Client-side
 
 include the client bundle from a CDN
@@ -89,6 +94,8 @@ socket.on('message', (message) => {
   console.log(message);
 });
 ```
+
+Refer to [Socket.IO](https://socket.io/docs/v3/) for more info.
 
 That's all.
 Don't forget to give the project a star! Thank you for visiting.
