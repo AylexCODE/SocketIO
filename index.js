@@ -20,6 +20,8 @@ socketIo.on('connection', socket => {
 
     socket.on('connectToConnection', (id) => {
         socket.join(connections[id]);
+        
+        console.log("Joined connection", id);
     });
 
     socket.on('sendMessage', (data) => {
