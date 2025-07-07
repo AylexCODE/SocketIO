@@ -1,5 +1,6 @@
 const express = require('express');
 const server = require('http').createServer(express);
+const PORT = process.env.PORT || 8080;
 
 const socketIo = require('socket.io')(server, {
     cors: { origin: '*' }
@@ -28,6 +29,6 @@ socketIo.on('connection', socket => {
     });
 });
 
-server.listen(3000, () => 
-    console.log("Socket is listening...")
+server.listen(PORT, () =>   
+    console.log("Socket is listening... at port", PORT)    
 );
