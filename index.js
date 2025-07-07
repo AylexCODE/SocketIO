@@ -34,7 +34,7 @@ socketIo.on('connection', socket => {
     });
 
     socket.on('sendMessage', (data) => {
-        socketIo.in(connections[data.id]).emit('receivedMessage', data.message);
+        socketIo.in(connections[data.id]).emit('receivedMessage', data);
 
         console.log("Sending Message to", data.id, "[ Content:", data.message, "]");
     });
