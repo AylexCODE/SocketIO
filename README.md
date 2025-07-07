@@ -1,7 +1,7 @@
 # About This Repository
 A simple socket.io project with `Rooms` feature
 
-A room is an arbitrary channel that sockets can join and leave. It can be used to broadcast events to a subset of clients. [See here](https://socket.io/docs/v3/rooms/)
+A Socket.IO room is an arbitrary channel that sockets can join and leave. It can be used to broadcast events to a subset of clients. [See here](https://socket.io/docs/v3/rooms/)
 
 # Getting Started
 To get a local copy up and running follow these simple example steps.
