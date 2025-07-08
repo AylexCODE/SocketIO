@@ -3,9 +3,13 @@ const app = express();
 const server = require('http').createServer(app);
 const PORT = process.env.PORT || 8080;
 
+const cors = require('cors');
+
 const socketIo = require('socket.io')(server, {
     cors: { origin: '*' }
 });
+
+app.use(cors());
 
 const connections = [];
 
