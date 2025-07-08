@@ -42,6 +42,8 @@ socketIo.on('connection', socket => {
 });
 
 app.get('/', (req, res) => {
+    console.log("ok");
+    
     res.status(200).send("ok");
 });
 
