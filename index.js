@@ -1,5 +1,6 @@
 const express = require('express');
-const server = require('http').createServer(express);
+const app = express();
+const server = require('http').createServer(app);
 const PORT = process.env.PORT || 8080;
 
 const socketIo = require('socket.io')(server, {
@@ -22,12 +23,12 @@ socketIo.on('connection', socket => {
         if(connections[id]){
             socket.join(connections[id]);
             callback({
-                status: "connected"
+                status: "Connected"
             });
             console.log("Joined connection", id);
         }else{
             callback({
-                status: "thatIdDoesNotExist"
+                status: "That ID does not exist"
             });
             console.log("Connection with ID: ", id, "does not exist");
         }
@@ -38,6 +39,10 @@ socketIo.on('connection', socket => {
 
         console.log("Sending Message to", data.id, "[ Content:", data.message, "]");
     });
+});
+
+app.get('/', (req, res) => {
+    res.status(200).send("ok");
 });
 
 server.listen(PORT, () =>   
