@@ -75,24 +75,48 @@ socket.on('disconnect', () => {
 });
 ```
 
-### Listening/Sending events
+### Listening/Sending events from server
 
-* Send 'message' event
-`socket.emit(event, argument);`
+* Send event to a server
+`socket.emit(event, ...args);`
 
 ```javascript
-// example
-socket.emit("message", "World");
+// example: 'sendMessage' event
+socket.emit("sendMessage", "World");
 ```
 
-* Listen for 'message' event
-`socket.on(event, callback);`
+* Listen for events sent by a server
+`socket.on(event, ...args);`
 
 ```javascript
-// example
-socket.on('message', (message) => {
+// example: 'recieveMessage' event
+socket.on('recieveMessage', (message) => {
   console.log(message);
 });
+```
+
+<br />
+
+## Server-side
+
+### Listening/Sending events from client
+
+* Listen for an event sent by a client
+`socket.on(event, ...args);`
+
+```javascript
+// example: listen for an event named 'sendMessage' sent by a client
+socket.on("sendMessage", (message) => {
+  console.log(message);
+}
+```
+
+* Send an event to a client
+`socket.emit(event, ...args);`
+
+```javascript
+// example: send an event named 'recieveMessage' to a client
+socket.emit("receiveMessage", "Hi");
 ```
 
 Refer to [Socket.IO](https://socket.io/docs/v3/) for more info.
