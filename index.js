@@ -43,6 +43,12 @@ socketIo.on('connection', socket => {
 
         console.log("Sending Message to", data.id, "[ Content:", data.message, "]");
     });
+
+    socket.on('update', (data) => {
+        socket.broadcast('update', { data.message });
+
+        console.log("Update:", data.message);
+    });
 });
 
 app.get('/', (req, res) => {
