@@ -45,7 +45,7 @@ socketIo.on('connection', socket => {
     });
 
     socket.on('update', (data) => {
-        socket.broadcast.emit('update', { data.message });
+        socket.broadcast.emit('update', data.message);
 
         console.log("Update:", data.message);
     });
