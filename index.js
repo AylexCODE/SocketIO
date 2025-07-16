@@ -23,21 +23,20 @@ function createServerConnection(id, socket){
 
 socketIo.on('connection', socket => {
     console.log("A user connected successfully!");
-
-    socket.on('connectToConnection', (dacallback) => {
-        console.log(type, id);
-        if(type == "client"){
-            if(connections[id]){
-                socket.join(connections[id]);
+    
+    socket.on('connectToConnection', (data, callback) => {
+        if(data.type == "client"){
+            if(connections[data.id]){
+                socket.join(connections[data.id]);
                 callback({
                     status: "Connected"
                 });
-                console.log("Joined connection", id);
+                console.log("Joined connection", data.id);
             }else{
                 callback({
                     status: "Invalid ID"
                 });
-                console.log("Connection with ID: ", id, "does not exist");
+                console.log("Connection with ID: ", data.id, "does not exist");
             }
         }else{
             createServerConnection(id, socket);
