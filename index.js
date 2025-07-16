@@ -13,28 +13,37 @@ app.use(cors());
 
 const connections = [];
 
+function createServerConnection(id, socket){
+    connections[id] = socket.id;
+    console.log("Create connection", id);
+
+    socket.join(connections[id]);
+    console.log("Joined connection", id);
+}
+
 socketIo.on('connection', socket => {
     console.log("A user connected successfully!");
 
-    socket.on('createConnection', (id) => {
-        connections[id] = socket.id;
-        socket.join(connections[id]);
-
-        console.log("Joined connection", id);
-    });
-
-    socket.on('connectToConnection', (id, callback) => {
-        if(connections[id]){
-            socket.join(connections[id]);
-            callback({
-                status: "Connected"
-            });
-            console.log("Joined connection", id);
+    socket.on('connectToConnection', (dacallback) => {
+        console.log(type, id);
+        if(type == "client"){
+            if(connections[id]){
+                socket.join(connections[id]);
+                callback({
+                    status: "Connected"
+                });
+                console.log("Joined connection", id);
+            }else{
+                callback({
+                    status: "Invalid ID"
+                });
+                console.log("Connection with ID: ", id, "does not exist");
+            }
         }else{
+            createServerConnection(id, socket);
             callback({
-                status: "That ID does not exist"
+                status: "Create Connection"
             });
-            console.log("Connection with ID: ", id, "does not exist");
         }
     });
 
@@ -48,6 +57,15 @@ socketIo.on('connection', socket => {
         socket.broadcast.emit('update', data);
 
         console.log("Update:", data);
+    });
+
+    socket.on('disconnect', () => {
+        for(const connectionId of connections){
+            console.log(connections, "=>", socket.id);
+            if(connectionId == socket.id){
+                delete connections[connectionId];
+            }
+        }
     });
 });
 
