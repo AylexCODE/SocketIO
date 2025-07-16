@@ -23,7 +23,7 @@ function createServerConnection(id, socket){
 
 socketIo.on('connection', socket => {
     console.log("A user connected successfully!");
-    
+
     socket.on('connectToConnection', (data, callback) => {
         if(data.type == "client"){
             if(connections[data.id]){
@@ -39,7 +39,7 @@ socketIo.on('connection', socket => {
                 console.log("Connection with ID: ", data.id, "does not exist");
             }
         }else{
-            createServerConnection(id, socket);
+            createServerConnection(data.id, socket);
             callback({
                 status: "Create Connection"
             });
