@@ -58,14 +58,14 @@ socketIo.on('connection', socket => {
         console.log("Update:", data);
     });
 
-    socket.on('disconnect', () => {
+    /*socket.on('disconnect', () => {
         for(const connectionId of connections){
             console.log(connections, "=>", socket.id);
             if(connectionId == socket.id){
                 delete connections[connectionId];
             }
         }
-    });
+    });*/
 });
 
 app.get('/', (req, res) => {
