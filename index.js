@@ -16,8 +16,8 @@ const servers = {};
 
 function createServerConnection(id, socket, callback){
     try{
-        if(id.includes(Object.keys(connections))){
-            console.warn("Connection with id", id, "exist, generating new id");
+        if(Object.keys(connections).includes(id)){
+            console.log("Connection with id", id, "exist, generating new id");
             
             createServerConnection(Math.floor(Math.random() * 9999), socket, callback);
             return;
