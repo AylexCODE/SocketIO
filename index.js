@@ -36,6 +36,7 @@ function createServerConnection(id, socket, callback){
             id: id
         });
     }catch(error){
+        console.log(error);
         callback({
             status: "error",
             id: 0000
