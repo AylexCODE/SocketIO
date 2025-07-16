@@ -14,18 +14,37 @@ app.use(cors());
 const connections = {};
 const servers = {};
 
-function createServerConnection(id, socket){
-    connections[id] = socket.id;
-    console.log("Create connection", id);
+function createServerConnection(id, socket, callback){
+    try{
+        if(id.includes(Object.keys(connections)){
+            console.log("Connection with id", id, "exist, generating new id");
+            
+            createServerConnection(Math.floor(Math.random() * 9999), socket, callback);
+            return;
+        }
 
-    socket.join(connections[id]);
-    console.log("Joined connection", id);
+        connections[id] = socket.id;
+        console.log("Create connection", id);
 
-    servers[socket.id] = id;
+        socket.join(connections[id]);
+        console.log("Joined connection", id);
+
+        servers[socket.id] = id;
+
+        callback({
+            status: "ok",
+            id: id
+        });
+    }catch(error){
+        callback({
+            status: "error",
+            id: 0000
+        });
+    }
 }
 
 socketIo.on('connection', socket => {
-    console.log("A user connected successfully!");
+    console.log("A device connected successfully!");
 
     socket.on('connectToConnection', (data, callback) => {
         if(data.type == "client"){
@@ -42,10 +61,7 @@ socketIo.on('connection', socket => {
                 console.log("Connection with ID: ", data.id, "does not exist");
             }
         }else{
-            createServerConnection(data.id, socket);
-            callback({
-                status: "Create Connection"
-            });
+            createServerConnection(data.id, socket, callback);
         }
     });
 
@@ -70,6 +86,7 @@ socketIo.on('connection', socket => {
             delete servers[socket.id];
 
             console.log("Delete connection", connectionId);
+            console.log(connections, servers);
         }
     });
 });
