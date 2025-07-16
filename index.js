@@ -30,7 +30,7 @@ function createServerConnection(id, socket, callback){
         console.log("Joined connection", id);
 
         servers[socket.id] = id;
-
+        console.log(connections, "\n", servers);
         callback({
             status: "ok",
             id: id
@@ -87,7 +87,7 @@ socketIo.on('connection', socket => {
             delete servers[socket.id];
 
             console.log("Delete connection", connectionId);
-            console.log(connections, servers);
+            console.log(connections, "\n", servers);
         }
     });
 });
