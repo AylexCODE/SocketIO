@@ -11,7 +11,8 @@ const socketIo = require('socket.io')(server, {
 
 app.use(cors());
 
-const connections = [];
+const connections = {};
+const servers = {};
 
 function createServerConnection(id, socket){
     connections[id] = socket.id;
@@ -19,6 +20,8 @@ function createServerConnection(id, socket){
 
     socket.join(connections[id]);
     console.log("Joined connection", id);
+
+    servers[socket.id] = id;
 }
 
 socketIo.on('connection', socket => {
@@ -58,14 +61,17 @@ socketIo.on('connection', socket => {
         console.log("Update:", data);
     });
 
-    /*socket.on('disconnect', () => {
-        for(const connectionId of connections){
-            console.log(connections, "=>", socket.id);
-            if(connectionId == socket.id){
-                delete connections[connectionId];
-            }
+    socket.on('disconnect', () => {
+        console.log("User disconnected");
+        if(servers.hasOwnProperty(socket.id)){
+            const connectionId = servers[socket.id);
+
+            delete connections[connectionId];
+            delete servers[socket.id];
+
+            console.log("Delete connection", connectionId);
         }
-    });*/
+    });
 });
 
 app.get('/', (req, res) => {
