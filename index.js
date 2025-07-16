@@ -64,7 +64,7 @@ socketIo.on('connection', socket => {
     socket.on('disconnect', () => {
         console.log("User disconnected");
         if(servers.hasOwnProperty(socket.id)){
-            const connectionId = servers[socket.id);
+            const connectionId = servers[socket.id];
 
             delete connections[connectionId];
             delete servers[socket.id];
