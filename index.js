@@ -93,7 +93,7 @@ socketIo.on('connection', socket => {
 });
 
 app.get('/', (req, res) => {
-    console.log("ok");
+    console.log(req.query != null ? req.query : "ok");
     
     res.status(200).send("ok");
 });
